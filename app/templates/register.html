@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script defer src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+    <div class="parent-div">
+        <section class="header-section">
+            
+        </section>
+        <div class="vertical-section-holder">
+            <section class="vertical-section-2">
+                <div class="login-signup-holder">
+                    <div class="forms">
+                        <form class="register-form" id="register-form">
+                            <h2 class="heading-text">Register</h2>
+                            <input type="text" id="username" placeholder="Enter your username" required/>
+                            
+                            <input type="password" id="password" placeholder="Enter your password" required/>
+
+                            <input type="text" id="phoneNum" placeholder="Enter your phone number" required/>
+
+                            <input type="text" id="monthlyBudget" placeholder="Enter your monthly budget"/>
+
+                            <button type="button" onclick="registerUser()">Register</button>
+                            <p class="message">Already registered? <a href="/login">Login</a></p>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="footer"></div>
+
+        <script>
+            function registerUser() {
+                var username = $('#username').val();
+                var password = $('#password').val();
+                var phoneNum = $('#phoneNum').val();
+                var monthlyBudget = $('#monthlyBudget').val();
+
+                $.ajax({
+                    url: '/register',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        username: username,
+                        password: password,
+                        phone_num: phoneNum,
+                        monthly_budget: monthlyBudget
+                    }),
+                    success: function(response) {
+                        // Handle successful registration response, e.g., redirect or show a message
+                        alert(response.message);
+                    },
+                    error: function(error) {
+                        // Handle registration error, e.g., show an error message
+                        console.error(error);
+                    }
+                });
+            }
+        </script>
+    </div>
+</body>
+</html>
